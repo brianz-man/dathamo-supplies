@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Check,
   Grid,
@@ -8,6 +8,8 @@ import {
   Utensils,
   Droplet,
   Square,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import type { Service } from "../types/service";
 import { ServiceBookingButtons } from "./ServiceBookingButtons";
@@ -27,6 +29,7 @@ const iconMap = {
 };
 
 export function ServiceCard({ service }: ServiceCardProps) {
+  const [expanded, setExpanded] = useState(false);
   const IconComponent = iconMap[service.id as keyof typeof iconMap];
 
   return (
@@ -38,29 +41,50 @@ export function ServiceCard({ service }: ServiceCardProps) {
           className="absolute h-full w-full object-cover"
         />
         {IconComponent && (
-          <span className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm">
-            <IconComponent className="h-4 w-4 text-amber-500" />
+          <span className="absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
+            <IconComponent className="h-3.5 w-3.5 text-amber-500" />
           </span>
         )}
       </div>
-      <div className="p-6">
-        <h3 className="mb-2 text-lg font-bold text-slate-900">
+      <div className="p-4">
+        <h3 className="mb-1 text-base font-bold leading-snug text-slate-900">
           {service.title}
         </h3>
-        <p className="mb-4 text-sm leading-relaxed text-slate-500">
+        <p className="mb-2 line-clamp-2 text-sm leading-snug text-slate-500">
           {service.description}
         </p>
-        <ul className="mb-6 space-y-2">
-          {service.features.map((feature, index) => (
-            <li
-              key={index}
-              className="flex items-center gap-2 text-sm text-slate-600"
-            >
-              <Check className="h-4 w-4 flex-shrink-0 text-emerald-500" />
-              {feature}
-            </li>
-          ))}
-        </ul>
+
+        {expanded && (
+          <ul className="mb-3 space-y-1.5">
+            {service.features.map((feature, index) => (
+              <li
+                key={index}
+                className="flex items-center gap-2 text-sm text-slate-600"
+              >
+                <Check className="h-3.5 w-3.5 flex-shrink-0 text-emerald-500" />
+                {feature}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="mb-3 inline-flex items-center gap-1 text-sm font-semibold text-amber-600 transition-colors hover:text-amber-700"
+        >
+          {expanded ? (
+            <>
+              Show less
+              <ChevronUp className="h-3.5 w-3.5" />
+            </>
+          ) : (
+            <>
+              Read more
+              <ChevronDown className="h-3.5 w-3.5" />
+            </>
+          )}
+        </button>
+
         <ServiceBookingButtons
           serviceName={service.title}
           phoneNumber="+254742581692"

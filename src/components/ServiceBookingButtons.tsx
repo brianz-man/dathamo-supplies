@@ -25,19 +25,19 @@ export function ServiceBookingButtons({
   };
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-2">
       <button
         onClick={handleCall}
-        className="flex items-center justify-center gap-2 rounded-lg bg-slate-900 py-2.5 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+        className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-slate-900 py-2 px-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
       >
-        <Phone className="h-4 w-4" />
+        <Phone className="h-3.5 w-3.5" />
         Call Now
       </button>
       <button
         onClick={handleWhatsApp}
-        className="flex items-center justify-center gap-2 rounded-lg bg-emerald-600 py-2.5 px-4 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+        className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg bg-emerald-600 py-2 px-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
       >
-        <MessageCircle className="h-4 w-4" />
+        <MessageCircle className="h-3.5 w-3.5" />
         WhatsApp
       </button>
     </div>
