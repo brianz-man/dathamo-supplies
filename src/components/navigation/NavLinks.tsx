@@ -1,6 +1,6 @@
-import React from 'react';
-import { User, MapPin, Phone } from 'lucide-react';
-import { SocialIcons } from '../SocialIcons';
+import React from "react";
+import { User, MapPin, Phone } from "lucide-react";
+import { SocialIcons } from "../SocialIcons";
 
 interface NavLinksProps {
   className?: string;
@@ -8,42 +8,62 @@ interface NavLinksProps {
   onLinkClick?: () => void;
 }
 
-export function NavLinks({ className = '', mobile = false, onLinkClick }: NavLinksProps) {
-  const links = [
-    { href: '#about', icon: User, label: 'About' },
-    { href: '#location', icon: MapPin, label: 'Find Us' },
-    { href: '#contact', icon: Phone, label: 'Contact' },
-  ];
+const links = [
+  { href: "#about", icon: User, label: "About" },
+  { href: "#location", icon: MapPin, label: "Find Us" },
+  { href: "#contact", icon: Phone, label: "Contact" },
+];
 
+export function NavLinks({
+  className = "",
+  mobile = false,
+  onLinkClick,
+}: NavLinksProps) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const href = e.currentTarget.getAttribute('href') || '';
+    const href = e.currentTarget.getAttribute("href") || "";
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
       onLinkClick?.();
     }
   };
 
   return (
-    <div className={className}>
+    <div
+      className={
+        mobile
+          ? `flex flex-col gap-1 ${className}`
+          : `flex items-center gap-7 ${className}`
+      }
+    >
       {links.map(({ href, icon: Icon, label }) => (
         <a
           key={href}
           href={href}
           onClick={handleClick}
-          className={`flex items-center transition-colors ${
-            mobile 
-              ? 'text-blue-600 hover:text-blue-800' 
-              : 'text-white hover:text-blue-100'
-          }`}
+          className={
+            mobile
+              ? "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900"
+              : "group relative flex items-center gap-2 py-2 text-sm font-semibold text-slate-700 transition-colors hover:text-slate-900"
+          }
         >
-          <Icon className="h-5 w-5 mr-2" />
+          <Icon
+            className={
+              mobile
+                ? "h-5 w-5 text-amber-500"
+                : "h-4 w-4 text-slate-400 transition-colors group-hover:text-amber-500"
+            }
+          />
           <span>{label}</span>
+          {!mobile && (
+            <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-amber-400 transition-all duration-200 group-hover:w-full" />
+          )}
         </a>
       ))}
-      <SocialIcons 
-        className={mobile ? 'justify-start mt-4' : ''} 
-        iconColor={mobile ? 'text-blue-600' : 'text-white'}
+      <SocialIcons
+        className={mobile ? "justify-start mt-3 px-3" : "ml-2"}
+        iconColor="text-slate-400"
+        iconSize={16}
       />
     </div>
   );
